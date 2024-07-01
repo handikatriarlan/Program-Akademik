@@ -1,18 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package programakademik;
 
-/**
- *
- * @author handi
- */
 public class menu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form menu
-     */
     public menu() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
