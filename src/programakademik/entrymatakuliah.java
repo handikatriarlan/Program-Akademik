@@ -176,16 +176,15 @@ public class entrymatakuliah extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
-            stat.executeUpdate("INSERT INTO matakuliah VALUES ("
-                    + "'" + vkdmtk.getText() + "',"
-                    + "'" + vnamamtk.getText() + "',"
-                    + "'" + vsks.getText()
-                    + "')"
-            );
+            String query = "INSERT INTO matakuliah VALUES ("
+                    + "'" + vkdmtk.getText() + "', "
+                    + "'" + vnamamtk.getText() + "', "
+                    + "'" + vsks.getText() + "')";
+            stat.executeUpdate(query);
             bersih();
-            JOptionPane.showMessageDialog(null, "Data berhasil disimpan.");
+            JOptionPane.showMessageDialog(rootPane, "Data berhasil disimpan.");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Keterangan error: " + e);
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -199,8 +198,8 @@ public class entrymatakuliah extends javax.swing.JFrame {
                 vnamamtk.setText("");
                 vsks.setText("");
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
         }
     }//GEN-LAST:event_vkdmtkActionPerformed
 
