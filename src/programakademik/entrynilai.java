@@ -1,20 +1,75 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package programakademik;
 
-/**
- *
- * @author handi
- */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 public class entrynilai extends javax.swing.JFrame {
 
-    /**
-     * Creates new form entrynilai
-     */
+    private Connection con;
+    private Statement stat;
+    private ResultSet res;
+
     public entrynilai() {
         initComponents();
+        koneksi();
+        bersih();
+        isicomboNOBP();
+        isicomboKDMTK();
+    }
+
+    private void koneksi() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/dbakademik", "root", "");
+            stat = con.createStatement();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void bersih() {
+        vnobp.setSelectedIndex(-1);
+        vkdmtk.setSelectedIndex(-1);
+        vnama.setText("");
+        vnamamtk.setText("");
+
+        vnilaitugas.setText("");
+        vnilaimid.setText("");
+        vnilaisemester.setText("");
+        vnilaiakhir.setText("");
+        vnilaihuruf.setText("");
+        vnobp.requestFocus();
+    }
+
+    private void isicomboNOBP() {
+        try {
+            vnobp.addItem("");
+            res = stat.executeQuery("SELECT * FROM mahasiswa");
+
+            while (res.next()) {
+                vnobp.addItem(res.getString("nobp"));
+            }
+            vnobp.setSelectedIndex(-1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
+        }
+    }
+
+    private void isicomboKDMTK() {
+        try {
+            vkdmtk.addItem("");
+            res = stat.executeQuery("SELECT * FROM matakuliah");
+
+            while (res.next()) {
+                vkdmtk.addItem(res.getString("kdmtk"));
+            }
+            vnobp.setSelectedIndex(-1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
+        }
     }
 
     /**
@@ -26,21 +81,245 @@ public class entrynilai extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        vnobp = new javax.swing.JComboBox<>();
+        vkdmtk = new javax.swing.JComboBox<>();
+        vnilaitugas = new javax.swing.JTextField();
+        vnilaimid = new javax.swing.JTextField();
+        vnilaisemester = new javax.swing.JTextField();
+        vnilaiakhir = new javax.swing.JTextField();
+        vnilaihuruf = new javax.swing.JTextField();
+        vnama = new javax.swing.JTextField();
+        vnamamtk = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(null);
 
-        pack();
+        jLabel1.setText("ENTRY DATA NILAI");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(200, 20, 150, 16);
+
+        jLabel2.setText("NOBP");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(40, 60, 90, 16);
+
+        jLabel3.setText("KODE MATA KULIAH");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(40, 90, 140, 16);
+
+        jLabel4.setText("NILAI TUGAS");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(40, 120, 120, 16);
+
+        jLabel5.setText("NILAI MID");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(40, 150, 90, 16);
+
+        jLabel6.setText("NILAI SEMESTER");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(40, 180, 120, 16);
+
+        jLabel7.setText("NILAI AKHIR");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(40, 210, 90, 16);
+
+        jLabel8.setText("NILAI HURUF");
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(40, 240, 100, 16);
+
+        vnobp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vnobpActionPerformed(evt);
+            }
+        });
+        getContentPane().add(vnobp);
+        vnobp.setBounds(210, 60, 100, 22);
+
+        vkdmtk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vkdmtkActionPerformed(evt);
+            }
+        });
+        getContentPane().add(vkdmtk);
+        vkdmtk.setBounds(210, 90, 100, 22);
+        getContentPane().add(vnilaitugas);
+        vnilaitugas.setBounds(210, 120, 50, 22);
+        getContentPane().add(vnilaimid);
+        vnilaimid.setBounds(210, 150, 50, 22);
+
+        vnilaisemester.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vnilaisemesterActionPerformed(evt);
+            }
+        });
+        getContentPane().add(vnilaisemester);
+        vnilaisemester.setBounds(210, 180, 50, 22);
+        getContentPane().add(vnilaiakhir);
+        vnilaiakhir.setBounds(210, 210, 50, 22);
+        getContentPane().add(vnilaihuruf);
+        vnilaihuruf.setBounds(210, 240, 50, 22);
+
+        vnama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vnamaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(vnama);
+        vnama.setBounds(330, 60, 140, 22);
+
+        vnamamtk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vnamamtkActionPerformed(evt);
+            }
+        });
+        getContentPane().add(vnamamtk);
+        vnamamtk.setBounds(330, 90, 140, 22);
+
+        jButton1.setText("Proses");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(270, 210, 100, 23);
+
+        jButton2.setText("Simpan");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(120, 290, 80, 23);
+
+        jButton3.setText("Edit");
+        getContentPane().add(jButton3);
+        jButton3.setBounds(210, 290, 80, 23);
+
+        jButton4.setText("Hapus");
+        getContentPane().add(jButton4);
+        jButton4.setBounds(300, 290, 80, 23);
+
+        jButton5.setText("Batal");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton5);
+        jButton5.setBounds(160, 330, 80, 23);
+
+        jButton6.setText("Keluar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton6);
+        jButton6.setBounds(250, 330, 80, 23);
+
+        setBounds(0, 0, 534, 412);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void vnilaisemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vnilaisemesterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vnilaisemesterActionPerformed
+
+    private void vnamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vnamaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vnamaActionPerformed
+
+    private void vnobpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vnobpActionPerformed
+        try {
+            res = stat.executeQuery("SELECT * FROM mahasiswa WHERE "
+                    + "nobp='" + vnobp.getSelectedItem() + "'"
+            );
+
+            while (res.next()) {
+                vnama.setText(res.getString("nama"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
+        }
+    }//GEN-LAST:event_vnobpActionPerformed
+
+    private void vkdmtkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vkdmtkActionPerformed
+        try {
+            res = stat.executeQuery("SELECT * FROM matakuliah WHERE "
+                    + "kdmtk='" + vkdmtk.getSelectedItem() + "'"
+            );
+
+            while (res.next()) {
+                vnamamtk.setText(res.getString("namamtk"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
+        }
+    }//GEN-LAST:event_vkdmtkActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        bersih();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Double totaltugas, totalmid, totalsemester, total;
+        totaltugas = (Double.parseDouble(vnilaitugas.getText()) * 20) / 100;
+        totalmid = (Double.parseDouble(vnilaimid.getText()) * 30) / 100;
+        totalsemester = (Double.parseDouble(vnilaisemester.getText()) * 50) / 100;
+        total = totaltugas + totalmid + totalsemester;
+        vnilaiakhir.setText(String.valueOf(total));
+        if (total >= 80) {
+            vnilaihuruf.setText("A");
+        } else if (total < 80 && total >= 65) {
+            vnilaihuruf.setText("B");
+        } else if (total < 65 && total >= 55) {
+            vnilaihuruf.setText("C");
+        } else if (total < 55 && total >= 40) {
+            vnilaihuruf.setText("D");
+        } else {
+            vnilaihuruf.setText("E");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            String query = "INSERT INTO nilai VALUES ("
+                    + "'" + vnobp.getSelectedItem() + "', "
+                    + "'" + vkdmtk.getSelectedItem() + "', "
+                    + "'" + vnilaitugas.getText() + "', "
+                    + "'" + vnilaimid.getText() + "', "
+                    + "'" + vnilaisemester.getText() + "', "
+                    + "'" + vnilaiakhir.getText() + "', "
+                    + "'" + vnilaihuruf.getText() + "')";
+            stat.executeUpdate(query);
+            bersih();
+            JOptionPane.showMessageDialog(rootPane, "Data berhasil disimpan.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void vnamamtkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vnamamtkActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vnamamtkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +357,28 @@ public class entrynilai extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JComboBox<String> vkdmtk;
+    private javax.swing.JTextField vnama;
+    private javax.swing.JTextField vnamamtk;
+    private javax.swing.JTextField vnilaiakhir;
+    private javax.swing.JTextField vnilaihuruf;
+    private javax.swing.JTextField vnilaimid;
+    private javax.swing.JTextField vnilaisemester;
+    private javax.swing.JTextField vnilaitugas;
+    private javax.swing.JComboBox<String> vnobp;
     // End of variables declaration//GEN-END:variables
 }

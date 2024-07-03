@@ -188,16 +188,11 @@ public class entrymahasiswa extends javax.swing.JFrame {
     private void vnobpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vnobpActionPerformed
         String query = "SELECT * FROM mahasiswa WHERE nobp='" + vnobp.getText() + "'";
         try (ResultSet res = stat.executeQuery(query)) {
-            if (res.next()) {
+            while (res.next()) {
                 vnama.setText(res.getString("nama"));
                 vkelas.setSelectedItem(res.getString("kelas"));
                 vtglultah.setDate(res.getDate("tglultah"));
                 vnomorhp.setText(res.getString("nomorhp"));
-            } else {
-                vnama.setText("");
-                vkelas.setSelectedItem("");
-                vtglultah.setDate(null);
-                vnomorhp.setText("");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);

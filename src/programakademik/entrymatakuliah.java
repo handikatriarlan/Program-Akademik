@@ -191,12 +191,9 @@ public class entrymatakuliah extends javax.swing.JFrame {
     private void vkdmtkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vkdmtkActionPerformed
         String query = "SELECT * FROM matakuliah WHERE kdmtk='" + vkdmtk.getText() + "'";
         try (ResultSet res = stat.executeQuery(query)) {
-            if (res.next()) {
+            while (res.next()) {
                 vnamamtk.setText(res.getString("namamtk"));
                 vsks.setText(res.getString("sks"));
-            } else {
-                vnamamtk.setText("");
-                vsks.setText("");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
