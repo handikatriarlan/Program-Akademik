@@ -207,10 +207,20 @@ public class entrynilai extends javax.swing.JFrame {
         jButton2.setBounds(120, 290, 80, 23);
 
         jButton3.setText("Edit");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton3);
         jButton3.setBounds(210, 290, 80, 23);
 
         jButton4.setText("Hapus");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton4);
         jButton4.setBounds(300, 290, 80, 23);
 
@@ -269,6 +279,20 @@ public class entrynilai extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
         }
+
+        String query = "SELECT * FROM nilai WHERE nobp='" + vnobp.getSelectedItem()
+                + "' AND kdmtk='" + vkdmtk.getSelectedItem() + "'";
+        try (ResultSet res = stat.executeQuery(query)) {
+            while (res.next()) {
+                vnilaitugas.setText(res.getString("nilaitugas"));
+                vnilaimid.setText(res.getString("nilaimid"));
+                vnilaisemester.setText(res.getString("nilaisemester"));
+                vnilaiakhir.setText(res.getString("nilaiakhir"));
+                vnilaihuruf.setText(res.getString("nilaihuruf"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
+        }
     }//GEN-LAST:event_vkdmtkActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -320,6 +344,36 @@ public class entrynilai extends javax.swing.JFrame {
     private void vnamamtkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vnamamtkActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_vnamamtkActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            String query = "UPDATE nilai SET "
+                    + "nilaitugas='" + vnilaitugas.getText() + "', "
+                    + "nilaimid='" + vnilaimid.getText() + "', "
+                    + "nilaisemester='" + vnilaisemester.getText() + "', "
+                    + "nilaiakhir='" + vnilaiakhir.getText() + "', "
+                    + "nilaihuruf='" + vnilaihuruf.getText() + "' "
+                    + "WHERE nobp='" + vnobp.getSelectedItem() + "' AND "
+                    + "kdmtk='" + vkdmtk.getSelectedItem() + "'";
+            stat.executeUpdate(query);
+            bersih();
+            JOptionPane.showMessageDialog(rootPane, "Data berhasil diperbarui.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            String query = "DELETE FROM nilai WHERE nobp='" + vnobp.getSelectedItem()
+                    + "' AND kdmtk='" + vkdmtk.getSelectedItem() + "'";
+            stat.executeUpdate(query);
+            bersih();
+            JOptionPane.showMessageDialog(rootPane, "Data berhasil dihapus.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
