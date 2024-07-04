@@ -134,7 +134,8 @@ public class entrymatakuliah extends javax.swing.JFrame {
         getContentPane().add(jButton5);
         jButton5.setBounds(70, 200, 80, 23);
 
-        setBounds(0, 0, 426, 307);
+        setSize(new java.awt.Dimension(426, 307));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void vsksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vsksActionPerformed

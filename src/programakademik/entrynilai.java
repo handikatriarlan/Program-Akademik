@@ -242,7 +242,8 @@ public class entrynilai extends javax.swing.JFrame {
         getContentPane().add(jButton6);
         jButton6.setBounds(250, 330, 80, 23);
 
-        setBounds(0, 0, 534, 412);
+        setSize(new java.awt.Dimension(534, 412));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void vnilaisemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vnilaisemesterActionPerformed
