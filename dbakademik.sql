@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 02, 2024 at 02:41 PM
+-- Generation Time: Jul 04, 2024 at 05:42 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.6
 
@@ -77,6 +77,13 @@ CREATE TABLE `nilai` (
   `nilaiakhir` int NOT NULL,
   `nilaihuruf` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `nilai`
+--
+
+INSERT INTO `nilai` (`nobp`, `kdmtk`, `nilaitugas`, `nilaimid`, `nilaisemester`, `nilaiakhir`, `nilaihuruf`) VALUES
+('0702222088', 'mk001', 100, 100, 100, 100, 'A');
 
 --
 -- Indexes for dumped tables
