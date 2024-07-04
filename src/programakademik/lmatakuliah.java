@@ -1,21 +1,54 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package programakademik;
 
-/**
- *
- * @author handi
- */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class lmatakuliah extends javax.swing.JDialog {
 
-    /**
-     * Creates new form lmatakuliah
-     */
+    private Connection con;
+    private Statement stat;
+    private ResultSet res;
+
     public lmatakuliah(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        koneksi();
+        tampilkanData();
+    }
+
+    private void koneksi() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/dbakademik", "root", "");
+            stat = con.createStatement();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void tampilkanData() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        try {
+            String query = "SELECT * FROM matakuliah";
+            res = stat.executeQuery(query);
+
+            while (res.next()) {
+                Object[] row = {
+                    res.getString("kdmtk"),
+                    res.getString("namamtk"),
+                    res.getString("sks")
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
+        }
     }
 
     /**
@@ -27,20 +60,43 @@ public class lmatakuliah extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(null);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jLabel1.setText("LAPORAN DATA MATA KULIAH");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(110, 40, 252, 16);
 
-        pack();
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "KODE MATA KULIAH", "NAMA MATA KULIAH", "SKS"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(10, 100, 382, 89);
+
+        setSize(new java.awt.Dimension(408, 335));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -86,5 +142,8 @@ public class lmatakuliah extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
