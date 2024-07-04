@@ -1,21 +1,56 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package programakademik;
 
-/**
- *
- * @author handi
- */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class lmahasiswa extends javax.swing.JDialog {
 
-    /**
-     * Creates new form lmahasiswa
-     */
+    private Connection con;
+    private Statement stat;
+    private ResultSet res;
+
     public lmahasiswa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        koneksi();
+        tampilkanData();
+    }
+
+    private void koneksi() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/dbakademik", "root", "");
+            stat = con.createStatement();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void tampilkanData() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        try {
+            String query = "SELECT * FROM mahasiswa";
+            res = stat.executeQuery(query);
+
+            while (res.next()) {
+                Object[] row = {
+                    res.getString("nobp"),
+                    res.getString("nama"),
+                    res.getString("kelas"),
+                    res.getDate("tglultah"),
+                    res.getString("nomorhp")
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Keterangan error: " + e);
+        }
     }
 
     /**
@@ -36,6 +71,12 @@ public class lmahasiswa extends javax.swing.JDialog {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -60,9 +101,10 @@ public class lmahasiswa extends javax.swing.JDialog {
 
         jLabel1.setText("LAPORAN DATA MAHASISWA");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(200, 20, 207, 16);
+        jLabel1.setBounds(200, 30, 207, 16);
 
-        setBounds(0, 0, 573, 307);
+        setSize(new java.awt.Dimension(573, 258));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
